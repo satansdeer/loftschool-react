@@ -3,12 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "faker": "^4.1.0",
+    "normalizr": "^3.2.4",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-scripts": "1.1.4"
+    "react-redux": "^5.0.7",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-actions": "^2.3.0",
+    "redux-saga": "^0.16.0",
+    "redux-saga-debounce-effect": "^0.2.2",
+    "reselect": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:server": "node ./server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
