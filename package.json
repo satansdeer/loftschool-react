@@ -3,11 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-scripts": "1.1.4"
+    "react-redux": "^5.0.7",
+    "react-scripts": "1.1.4",
+    "recompose": "^0.27.0",
+    "redux": "^4.0.0",
+    "redux-actions": "^2.3.0",
+    "redux-saga": "^0.16.0"
   },
   "scripts": {
+    "start:jwt-server": "node server/jwt/index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

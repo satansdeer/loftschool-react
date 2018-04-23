@@ -1,0 +1,22 @@
+.app .field {
+  background-color: white;
+  border: 1px solid black;
+  width: 500px;
+  height: 500px;
+  position: relative;
+}
+
+.app .player {
+  background-color: black;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+}
+
+.app .exit {
+  border: 4px solid black;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  box-sizing: border-box;
+}
