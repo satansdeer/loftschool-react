@@ -3,6 +3,7 @@ import './App.css';
 import { connect } from 'react-redux';
 import { getRequest, getIsSearching, getResult } from './ducks/search';
 
+
 class App extends PureComponent {
   state = {
     searchInput: '',

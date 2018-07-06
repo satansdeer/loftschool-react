@@ -1,0 +1,17 @@
+.xkcd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.xkcd__content {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+}
+
+.xkcd-image {
+  object-fit: contain;
+}
