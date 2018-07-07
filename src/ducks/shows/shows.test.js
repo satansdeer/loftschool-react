@@ -13,6 +13,7 @@ it('', () => {
   const state0 = shows(undefined, {
     type: '@@TEST/INIT',
   });
+
   expect(state0).toEqual(INIT_STATE);
 });
 

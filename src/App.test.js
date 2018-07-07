@@ -1,70 +1,58 @@
 import React from 'react';
 import App from './App';
-
 import { mount } from 'enzyme';
+import Title from './Title';
 
-describe('Компонента App', () => {
-  const wrapper = mount(<App var1={1} var2={2} />);
+// shallow
+// mount
+// render -- cheerio (jQuery like)
 
-  describe('Содержит:', () => {
-    // it('div', () => {
-    //   expect(
-    //     wrapper.find('div'),
-    //   ).toHaveLength(1);
-    // });
-    // it('div > Title', () => {
-    //   expect(
-    //     wrapper.find('div > Title'),
-    //   ).toHaveLength(1);
-    // });
-    // it('div > input', () => {
-    //   expect(
-    //     wrapper.find('div > input'),
-    //   ).toHaveLength(1);
-    // });
-    [
-      'div',
-      'div > Title',
-      'div > input',
-    ].forEach(selector => {
-      it(selector, () => {
-        expect(
-          wrapper.find(selector).length,
-        ).toBeGreaterThanOrEqual(1)
-      });
+describe('App', () => {
+  const wrapper = mount(<App />);
+
+  it('element [name="test"] exist', () => {
+    expect(
+      wrapper.contains(
+        <Title counter={3} fontSize={30}>
+          123
+        </Title>,
+      ),
+    ).toBeTruthy();
+  });
+
+  it('state', () => {
+    expect(wrapper.state()).toEqual({
+      test: '',
+      counter: 3,
     });
   });
 
-  describe('State', () => {
-    it('По умолчанию содержит {test: ""}', () => {
-      expect(wrapper.state()).toEqual({
-        test: '',
-        counter: 3
-      });
-    });
-
-    it('При вызове handleChange меняется стейт', () => {
-      const input = wrapper.find('input');
-
-      input.simulate('change', {
+  it('check handleChange', () => {
+    wrapper
+      .find('[name="test"]')
+      .simulate('change', {
         target: {
-          name: 'test',
-          value: 'test_2',
+          name: 'test2',
+          value: 'test2',
         },
       });
 
-      expect(wrapper.state()).toEqual({
-        test: 'test_2',
-        counter: 3
-      });
+    expect(wrapper.state()).toEqual({
+      test: '',
+      counter: 3,
+      test2: 'test2',
     });
   });
 
-  describe('Методы компоненты', () => {
-    it('handleChange', () => {
-      expect(
-        wrapper.instance().handleChange,
-      ).toBeDefined();
+  it('It have component Title with props {counter: 3, fontSize: 30, children: 30}', () => {
+    const TitleWrapper = wrapper.find(
+      'Title',
+    );
+
+    expect(TitleWrapper.props()).toEqual({
+      counter: 3,
+      fontSize: 30,
+      children: '123',
     });
   });
 });

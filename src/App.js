@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Title from './Title';
 
-class App extends Component {
+export class App extends Component {
   state = {
     test: '',
     counter: 3,
   };
 
   handleChange = event => {
+
     this.setState({
       [event.target.name]:
         event.target.value,
