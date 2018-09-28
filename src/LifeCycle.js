@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 
 export class LifeCycle extends Component {
-  static defaultProps = {};
-
   state = {
     creditCardInput: this.props.creditCard,
   };
+
   constructor(props) {
     super(props);
     console.log('constructor');
     console.log(props);
-    this.div = React.createRef()
-    console.log(this.div)
+    this.someDiv = React.createRef()
+    console.log(this.someDiv)
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -24,7 +23,7 @@ export class LifeCycle extends Component {
   }
 
   componentDidMount() {
-    console.log(this.div.current.getBoundingClientRect())
+    console.log(this.someDiv.current.getBoundingClientRect())
     console.log('componentDidMount');
   }
 
@@ -45,27 +44,10 @@ export class LifeCycle extends Component {
     console.log('componentDidUpdate');
   }
 
-  // unsafe / deprecated
-
-  // componentWillReceiveProps(nextProps) {
-  //   this.props !== nextProps
-  //   console.log('componentWillReceiveProps');
-  // }
-
-  // componentWillMount() {
-  //   console.log('componentWillMount');
-  // }
-
-  // componentWillUpdate(nextProps, nextState) {
-  //   this.props !== nextProps
-  //   this.state !== nextState
-  //   console.log('componentWillUpdate');
-  // }
-
   render() {
     console.log('render');
     const { creditCardInput } = this.state;
-    return <div ref={this.div}>{creditCardInput}</div>;
+    return <div ref={this.someDiv}>{creditCardInput}</div>;
   }
 }
 

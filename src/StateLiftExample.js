@@ -16,17 +16,15 @@ class LiftStateExample extends Component {
   render() {
     return (
       <div>
-        {Object.keys(this.state).map(
-          fieldName => (
-            <input
-              key={fieldName}
-              name={fieldName}
-              value={this.state[fieldName]}
-              placeholder={fieldName.toUpperCase()}
-              onChange={this.handleChange}
-            />
-          ),
-        )}
+        {Object.keys(this.state).map(fieldName => (
+          <input
+            key={fieldName}
+            name={fieldName}
+            value={this.state[fieldName]}
+            placeholder={fieldName.toUpperCase()}
+            onChange={this.handleChange}
+          />
+        ))}
       </div>
     );
   }
