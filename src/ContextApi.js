@@ -1,60 +1,57 @@
 import React, { Component } from 'react';
 
-const { Provider, Consumer } = React.createContext('light');
-export class ContextApi extends Component {
+const {
+  Consumer: ThemeConsumer,
+  Provider: ThemeProvider,
+} = React.createContext('');
+
+export class ContextApiProvider extends Component {
   state = { theme: 'light' };
 
-  componentDidMount() {
-    setInterval(() => {
-      this.setState(state => {
-        return state.theme === 'light'
-          ? { theme: 'dark' }
-          : { theme: 'light' };
-      });
-    }, 1000);
+  toggleTheme = () => {
+    this.setState(state => ({
+      theme: state.theme === 'light' ? 'dark' : 'light',
+    }));
   }
+
   render() {
+    const { theme, children } = this.state;
     return (
-      <Provider value={this.state.theme}>
+      <ThemeProvider
+        value={{ theme, toggleTheme: this.toggleTheme }}
+      >
         <IntermediateComponent>
-          <ThemedButton />
+          {({ value }) => <p>{value}</p>}
         </IntermediateComponent>
-      </Provider>
+        {children}
+      </ThemeProvider>
     );
   }
 }
 
-const IntermediateComponent = ({ children }) => {
-  return <div>{children}</div>;
-};
-
-function withTheme(WrappedComponent) {
-  return class extends Component {
-    render() {
-      return (
-        <Consumer>
-          {theme => (
-            <WrappedComponent
-              {...this.props}
-              theme={theme}
-            />
-          )}
-        </Consumer>
-      );
-    }
-  };
-}
-
-const Button = ({ theme }) => (
-  <button
-    style={{
-      backgroundColor: theme === 'light' ? '#333' : '#eee',
-    }}
-  >
-    Кнопка с темой
-  </button>
+const IntermediateComponent = ({ children }) => (
+  <div>
+    {children({
+      value: 'Hello from IntermediateComponent',
+    })}
+    <Button />
+  </div>
 );
 
-const ThemedButton = withTheme(Button);
+const Button = () => (
+  <ThemeConsumer>
+    {({ theme, toggleTheme }) => (
+      <button
+        onClick={toggleTheme}
+        style={{
+          backgroundColor:
+            theme === 'light' ? '#666' : '#eee',
+        }}
+      >
+        Кнопка с темой
+      </button>
+    )}
+  </ThemeConsumer>
+);
 
-export default ContextApi;
+export default ContextApiProvider;

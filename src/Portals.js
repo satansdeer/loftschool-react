@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 export class PortalExample extends Component {
   state = {
-    isShowModal: true,
+    isShowModal: false,
   };
 
   toggleModal = () => {
@@ -12,32 +12,59 @@ export class PortalExample extends Component {
     }));
   };
 
-  showEvent = event => {
+  handleEvents = event => {
     console.log(event.nativeEvent);
   };
 
   render() {
     const { isShowModal } = this.state;
     return (
-      <div onClick={this.showEvent}>
+      <div onClick={this.handleEvents}>
         <button onClick={this.toggleModal}>
           Открыть модальное окно
         </button>
-        <Modal show={isShowModal}>
-          <p>Я модальное окно</p>
-          <button>Закрой меня</button>
-        </Modal>
+
+        {isShowModal && (
+          <Modal show={isShowModal}>
+            <p>Я модальное окно</p>
+            <button onClick={this.toggleModal}>
+              Закрой меня
+            </button>
+            <button>Просто кнопка</button>
+          </Modal>
+        )}
       </div>
     );
   }
 }
 
-const Modal = ({ show, children }) =>
-  show
-    ? ReactDOM.createPortal(
+class Modal extends Component {
+  constructor(props) {
+    super(props);
+    this.id = 'modalPortal';
+    this.div = document.createElement('div');
+    this.div.id = this.id;
+    document.body.insertAdjacentElement(
+      'beforeend',
+      this.div,
+    );
+  }
+
+  componentWillUnmount() {
+    this.div.parentNode.removeChild(this.div);
+  }
+
+  render() {
+    const { show, children } = this.props;
+    if (show) {
+      return ReactDOM.createPortal(
         children,
-        document.getElementById('portal'),
-      )
-    : null;
+        document.getElementById(this.id),
+      );
+    } else {
+      return null;
+    }
+  }
+}
 
 export default PortalExample;
