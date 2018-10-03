@@ -1,6 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+// import RecomposeExample from './RecomposeExample';
+import ForwardRefExample from './ForwardRefExample';
+// import RenderProps from './RenderProps';
+// import HOCs from './HOCs';
+// import { AuthProvider, authHOC } from './AuthContext';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// let SomeComponent = ({ login, logout, isAuthorized }) => (
+//   <div>
+//     <button onClick={login}>login</button>
+//     <button onClick={logout}>logout</button>
+//     {isAuthorized ? 'You are entered' : 'You are out'}
+//   </div>
+// );
+
+// SomeComponent = authHOC(SomeComponent);
+
+ReactDOM.render(
+  // <AuthProvider>
+  //   <HOCs />
+  //   {/* <SomeComponent /> */}
+  // </AuthProvider>,
+  // <RecomposeExample />,
+  <ForwardRefExample />,
+  document.getElementById('root'),
+);
