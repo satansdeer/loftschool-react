@@ -7,13 +7,14 @@ import {
 import { connect } from 'react-redux';
 
 let id = 0;
-
 const App = props => {
   const { users, addUser, removeAllUsers } = props;
 
   return (
     <div>
-      <button onClick={() => addUser(id++, `Alexander ${id}`)}>
+      <button
+        onClick={() => addUser(id, `Alexander ${id++}`)}
+      >
         Добавить пользователя
       </button>
       <button onClick={removeAllUsers}>Удалить всех</button>
@@ -40,8 +41,7 @@ const mapDispatchToProps = {
   removeAllUsers,
 };
 
-// prettier-ignore
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(App)
+  mapDispatchToProps,
+)(App);
