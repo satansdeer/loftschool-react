@@ -12,6 +12,7 @@ const {
 } = React.createContext({ isAuthorized: false });
 
 export class PrivateExample extends Component {
+  loginPath = '/login';
   state = {
     isAuthorized: false,
   };
@@ -24,7 +25,11 @@ export class PrivateExample extends Component {
     const { isAuthorized } = this.state;
     return (
       <AuthProvider
-        value={{ isAuthorized, authorize: this.authorize }}
+        value={{
+          isAuthorized,
+          authorize: this.authorize,
+          loginPath: this.loginPath,
+        }}
       >
         <Link to="/public">Public</Link>{' '}
         <Link to="/private">Private</Link>{' '}
@@ -47,32 +52,48 @@ export class PrivateExample extends Component {
   }
 }
 
-const LoginPage = () => (
-  <AuthConsumer>
-    {({ authorize }) => (
-      <button onClick={authorize}>Authorize</button>
-    )}
-  </AuthConsumer>
-);
+let LoginPage = ({ isAuthorized, authorize }) =>
+  isAuthorized ? (
+    <Redirect to="/" />
+  ) : (
+    <button onClick={authorize}>Authorize</button>
+  );
 
-const PrivateRoute = ({
-  component: Component,
+LoginPage = withAuth(LoginPage);
+
+function withAuth(WrappedComponent) {
+  return class AuthHOC extends Component {
+    render() {
+      const { ...rest } = this.props;
+      return (
+        <AuthConsumer>
+          {contextProps => (
+            <WrappedComponent {...contextProps} {...rest} />
+          )}
+        </AuthConsumer>
+      );
+    }
+  };
+}
+
+let PrivateRoute = ({
+  component: RouteComponent,
+  isAuthorized,
+  loginPath,
   ...rest
 }) => (
-  <AuthConsumer>
-    {({ isAuthorized }) => (
-      <Route
-        {...rest}
-        render={props =>
-          isAuthorized ? (
-            <Component {...props} />
-          ) : (
-            <Redirect to="/login" />
-          )
-        }
-      />
-    )}
-  </AuthConsumer>
+  <Route
+    {...rest}
+    render={routeProps =>
+      isAuthorized ? (
+        <RouteComponent {...routeProps} />
+      ) : (
+        <Redirect to={loginPath} />
+      )
+    }
+  />
 );
+
+PrivateRoute = withAuth(PrivateRoute);
 
 export default PrivateExample;

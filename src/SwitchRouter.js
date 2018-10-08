@@ -21,13 +21,14 @@ class App extends Component {
         <Link to="/topics">Topics</Link>
 
         <hr />
+
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
           <Route path="/topics" component={Topics} />
           {/* <Route path="*" component={PageNotFound} /> */}
           <Redirect from="/about2" to="/about" />
-          <Redirect from="*" to="/" />
+          <Redirect to="/" />
         </Switch>
       </div>
     );

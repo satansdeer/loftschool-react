@@ -1,21 +1,34 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, withRouter } from 'react-router-dom';
 
-const Home = props => {
+let Home = props => {
   console.log(props);
-  return <div>Home</div>;
+  return (
+    <>
+      <Link to="/about">About</Link>
+      <div>Home</div>
+    </>
+  );
 };
-const About = () => <div>About</div>;
+
+Home = withRouter(Home);
+
+const About = props => {
+  console.log(props);
+  return <div>About</div>;
+};
+
 const Topics = props => {
   console.log(props);
   return <div>Topics</div>;
 };
 
-class App extends Component {
+class SimpleRouter extends Component {
   state = {
     userName: 'Artem',
   };
+
   render() {
     const { userName } = this.state;
     return (
@@ -26,8 +39,8 @@ class App extends Component {
 
         <hr />
         <Route path="/" component={Home} exact />
-        <Route path="/home/:id" component={Home} exact />
-        <Route path="/about" component={About} />
+        <Route path="/home/:id" component={Home} />
+        <Route path="/about*" component={About} />
         <Route
           path="/topics"
           render={props => (
@@ -39,4 +52,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default SimpleRouter;

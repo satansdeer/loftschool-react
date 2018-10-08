@@ -4,7 +4,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 
 const CatPhotoComponent = ({ match }) => {
   console.log(match);
-  return <p>cat Photo {match.params.photoId}</p>;
+  return <p>cat {match.params.id} Photo {match.params.photoId}</p>;
 };
 
 const CatComponent = ({ match }) => {
@@ -32,6 +32,7 @@ const CatComponent = ({ match }) => {
 };
 
 const Hobbies = ({ match }) => {
+  console.log(match)
   return (
     <div>
       <p>Hobbies</p>
@@ -59,13 +60,16 @@ const App = () => (
       <Link to="/">Home</Link>{' '}
       <Link to="/Hobbies">Hobbies</Link>
     </nav>
+
     <hr />
+
     <div>
       <Switch>
         <Route path="/" render={() => <p>Home</p>} exact />
         <Route path="/Hobbies" component={Hobbies} />
       </Switch>
     </div>
+
   </div>
 );
 
