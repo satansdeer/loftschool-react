@@ -1,7 +1,12 @@
 import React, { PureComponent } from 'react';
-import { getSeriesRequest } from './actions';
-import { connect } from 'react-redux';
 import './App.css';
+import {
+  getSeriesImages,
+  getIsLoading,
+  getError,
+  fetchSeriesRequest,
+} from './modules/series/';
+import { connect } from 'react-redux';
 
 // 0. idle
 // 1. request
@@ -22,25 +27,22 @@ import './App.css';
 
 class App extends PureComponent {
   componentDidMount() {
-    this.props.getSeriesRequest();
+    const { fetchSeriesRequest } = this.props;
+    fetchSeriesRequest(180);
   }
 
   render() {
     const { series, isLoading, error } = this.props;
 
-    if (isLoading) {
-      return <p>Данные загружаются...</p>;
-    }
+    if (isLoading) return <p>Данные загружаются...</p>;
+    if (error) return <p>Произошла сетевая ошибка</p>;
 
-    if (error) {
-      return <p>Произошла сетевая ошибка</p>;
-    }
     return (
       <div>
         <h1>Firefly</h1>
         {series.map(ep => (
           <div key={ep.id}>
-            <img src={ep.image.original} alt={ep.name} />
+            <img src={ep.image} alt={ep.name} />
           </div>
         ))}
       </div>
@@ -49,13 +51,13 @@ class App extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.isLoading,
-  error: state.error,
-  series: state.series,
+  series: getSeriesImages(state),
+  isLoading: getIsLoading(state),
+  error: getError(state),
 });
+const mapDispatchToProps = { fetchSeriesRequest };
 
-const mapDispatchToProps = { getSeriesRequest };
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  App,
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);
