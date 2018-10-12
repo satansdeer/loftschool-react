@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
-import { getRequest, getIsSearching, getResult } from './ducks/search';
+import { getRequest, getIsSearching, getResult } from './modules/search';
 
 
 class App extends PureComponent {

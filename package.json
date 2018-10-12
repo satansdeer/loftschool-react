@@ -4,20 +4,21 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "cors": "^2.8.4",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "faker": "^4.1.0",
-    "normalizr": "^3.2.4",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "normalizr": "^3.3.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
-    "react-scripts": "1.1.4",
+    "react-scripts": "2.0.4",
     "redux": "^4.0.0",
-    "redux-actions": "^2.4.0",
-    "redux-saga": "^0.16.0",
+    "redux-actions": "^2.6.1",
+    "redux-saga": "^0.16.2",
     "redux-saga-debounce-effect": "^0.2.2",
-    "reselect": "^3.0.1"
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,5 +26,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

@@ -1,25 +1,22 @@
-import { getXkcdImageRequest, getXkcdImageSuccess } from '../ducks/xkcd';
-import { takeEvery, call, put } from 'redux-saga/effects';
-import { getXkcdImage, sendReport } from '../api';
-import { addNetworkError } from '../ducks/network';
+import {
+  getXkcdImageRequest,
+  getXkcdImageSuccess,
+  getXkcdImageFailure,
+} from '../modules/xkcd';
+import { take, call, put } from 'redux-saga/effects';
+import { getXkcdImage } from '../api';
 
-function* xkcdImageRequestFlow() {
-  try {
-    const response = yield call(networkWrapper, getXkcdImage);
-    yield put(getXkcdImageSuccess(response));
-  } catch (error) {}
-}
+export function* xkcdImageRequestWatcher() {
+  while (true) {
+    yield take(getXkcdImageRequest);
 
-function* networkWrapper(newtorkFn) {
-  try {
-    const result = yield call(newtorkFn);
-    return result;
-  } catch (error) {
-    yield call(sendReport, error);
-    yield put(addNetworkError);
+    try {
+      const response = yield call(getXkcdImage);
+      yield put(getXkcdImageSuccess(response));
+    } catch (error) {
+      yield put(getXkcdImageFailure(error));
+    }
   }
 }
 
-export function* xkcdImageRequestWatcher() {
-  yield takeEvery(getXkcdImageRequest.toString(), xkcdImageRequestFlow);
-}
+// const delay = ms => new Promise(resolve => setTimeout(resolve, ms));

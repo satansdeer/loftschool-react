@@ -1,15 +1,6 @@
 import { combineReducers } from 'redux';
-import { handleActions, createActions } from 'redux-actions';
-
-const {
-  search: { getRequest, getSuccess, getFailure },
-} = createActions({
-  SEARCH: {
-    GET_REQUEST: null,
-    GET_SUCCESS: null,
-    GET_FAILURE: null,
-  },
-});
+import { handleActions } from 'redux-actions';
+import { getRequest, getSuccess, getFailure } from './actions';
 
 const isSearching = handleActions(
   {
@@ -42,8 +33,6 @@ export default combineReducers({
   error,
   result,
 });
-
-export { getRequest, getSuccess, getFailure };
 
 export const getIsSearching = state => state.search.isSearching;
 export const getResult = state => state.search.result;

@@ -1,27 +1,13 @@
 import React, { Component } from 'react';
 import './Xkcd.css';
 import { connect } from 'react-redux';
-import {
-  getXkcdImageRequest,
-  getContent,
-  getIsLoading,
-  getError,
-} from './ducks/xkcd';
+import { getContent, getIsLoading, getError } from './modules/xkcd';
 
 class Xkcd extends Component {
-  componentDidMount() {
-    this.props.getXkcdImageRequest();
-
-    // setInterval(() => {
-    //   this.props.getXkcdImageRequest();
-    // }, 3000);
-  }
-
   render() {
     const { error, isLoading, content: xkcd } = this.props;
-    if (error != null) {
-      return <p>{error}</p>;
-    }
+    if (xkcd == null) return <p>No data</p>
+    if (error != null) return <p>{error}</p>;
 
     return (
       <div className="xkcd">
@@ -30,14 +16,8 @@ class Xkcd extends Component {
             <p>Загрузка</p>
           ) : (
             <React.Fragment>
-              <img
-                className="xkcd-image"
-                src={xkcd.img}
-                alt={xkcd.alt}
-              />
-              <p className="xkcd-description">
-                {xkcd.transcript}
-              </p>
+              <img className="xkcd-image" src={xkcd.img} alt={xkcd.alt} />
+              <p className="xkcd-description">{xkcd.transcript}</p>
             </React.Fragment>
           )}
         </div>
@@ -52,11 +32,4 @@ const mapStateToProps = state => ({
   error: getError(state),
 });
 
-const mapDispatchToProps = {
-  getXkcdImageRequest,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Xkcd);
+export default connect(mapStateToProps)(Xkcd);

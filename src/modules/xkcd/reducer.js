@@ -8,23 +8,23 @@ import {
 
 const isLoading = handleActions(
   {
-    [getXkcdImageRequest.toString()]: () => true,
-    [getXkcdImageSuccess.toString()]: () => false,
-    [getXkcdImageFailure.toString()]: () => false,
+    [getXkcdImageRequest]: () => true,
+    [getXkcdImageSuccess]: () => false,
+    [getXkcdImageFailure]: () => false,
   },
-  true,
+  false,
 );
 
 const content = handleActions(
   {
-    [getXkcdImageSuccess.toString()]: (_state, action) =>
+    [getXkcdImageSuccess]: (_state, action) =>
       action.payload,
   },
   null,
 );
 
 const error = handleActions({
-  [getXkcdImageFailure.toString()]: (_, action) => action.payload,
+  [getXkcdImageFailure]: (_, action) => action.payload,
 }, null)
 
 export default combineReducers({ isLoading, content, error });

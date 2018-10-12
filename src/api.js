@@ -1,6 +1,5 @@
 let controller;
 export const search = query => {
-  // eslint-disable-next-line
   controller = new AbortController();
   const signal = controller.signal;
 
