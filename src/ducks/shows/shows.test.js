@@ -1,8 +1,4 @@
-import shows, {
-  getShowRequest,
-  getShowSuccess,
-  getShowFailure,
-} from './index';
+import shows, { getShowRequest, getShowSuccess, getShowFailure } from './index';
 
 const INIT_STATE = {
   elements: {},
@@ -18,10 +14,17 @@ it('', () => {
 });
 
 it('', () => {
-  const state1 = shows(
-    INIT_STATE,
-    getShowRequest(),
-  );
+  const state1 = shows(INIT_STATE, getShowRequest());
   expect(state1.isLoading).toBeTruthy();
 });
 
+it('', () => {
+  const testShow = { test: 'test' };
+  const state1 = shows(
+    INIT_STATE,
+    getShowSuccess({ entities: { show: testShow } }),
+  );
+
+  console.log(state1)
+  expect(state1.elements).toEqual(expect.objectContaining(testShow))
+});

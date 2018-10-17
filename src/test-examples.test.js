@@ -11,7 +11,7 @@ describe('Apply fn', () => {
   });
   it('2', done => {
     setTimeout(() => {
-      done()
-    }, 1000)
+      done();
+    }, 1000);
   });
 });

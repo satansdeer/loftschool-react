@@ -1,17 +1,11 @@
-import {
-  getShowRequest,
-  getShowSuccess,
-  getShowFailure,
-} from '../ducks/shows';
+import { getShowRequest, getShowSuccess, getShowFailure } from '../ducks/shows';
+import { call, put, takeEvery } from 'redux-saga/effects';
 
-import {
-  call,
-  put,
-  takeEvery,
-} from 'redux-saga/effects';
+export function* fetchCarsWatcher() {
+  yield takeEvery(getShowRequest, fetchCarsFlow);
+}
 
 export function getCars() {}
-
 export function* fetchCarsFlow() {
   try {
     const data = yield call(getCars);
@@ -19,11 +13,4 @@ export function* fetchCarsFlow() {
   } catch (error) {
     yield put(getShowFailure(error));
   }
-}
-
-export function* fetchCarsWatcher() {
-  yield takeEvery(
-    getShowRequest.toString(),
-    fetchCarsFlow,
-  );
 }

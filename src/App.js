@@ -8,10 +8,8 @@ export class App extends Component {
   };
 
   handleChange = event => {
-
     this.setState({
-      [event.target.name]:
-        event.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -19,10 +17,7 @@ export class App extends Component {
     const { counter } = this.state;
     return (
       <div>
-        <Title
-          counter={counter}
-          fontSize={30}
-        >
+        <Title counter={counter} fontSize={30}>
           123
         </Title>
         <input

@@ -19,7 +19,7 @@ class Title extends Component {
 
 class SomeComponent extends Component {
   render() {
-    return <sometag />;
+    return <div />;
   }
 }
 
