@@ -1,69 +1,37 @@
-import { combineReducers } from 'redux';
-import {
-  handleActions,
-  createActions,
-} from 'redux-actions';
+import { combineReducers } from 'redux'
+import { handleActions, createAction } from 'redux-actions'
 
-const {
-  auth: {
-    getJwtRequest,
-    getJwtSuccess,
-    getJwtFailure,
-    getUserSecretRequest,
-    getUserSecretSuccess,
-    getUserSecretFailure,
-    login,
-    logout,
-  },
-} = createActions({
-  AUTH: {
-    GET_JWT_REQUEST: null,
-    GET_JWT_SUCCESS: null,
-    GET_JWT_FAILURE: null,
-    GET_USER_SECRET_REQUEST: null,
-    GET_USER_SECRET_SUCCESS: null,
-    GET_USER_SECRET_FAILURE: null,
-    LOGIN: null,
-    LOGOUT: null,
-  },
-});
+export const getJwtRequest = createAction('AUTH/GET_JWT_REQUEST')
+export const getJwtSuccess = createAction('AUTH/GET_JWT_SUCCESS')
+export const getJwtFailure = createAction('AUTH/GET_JWT_FAILURE')
+export const getUserSecretRequest = createAction('AUTH/GET_USER_SECRET_REQUEST')
+export const getUserSecretSuccess = createAction('AUTH/GET_USER_SECRET_SUCCESS')
+export const getUserSecretFailure = createAction('AUTH/GET_USER_SECRET_FAILURE')
+export const login = createAction('AUTH/LOGIN')
+export const logout = createAction('AUTH/LOGOUT')
 
 const isAuthorized = handleActions(
   {
     [login]: () => true,
-    [logout]: () => false,
+    [logout]: () => false
   },
-  false,
-);
+  false
+)
 
 const userProfile = handleActions(
   {
     [login]: (state, action) => action.payload,
-    [logout]: () => null,
+    [logout]: () => null
   },
-  null,
-);
+  null
+)
 
 export default combineReducers({
   isAuthorized,
-  userProfile,
-});
+  userProfile
+})
 
-export {
-  getJwtRequest,
-  getJwtSuccess,
-  getJwtFailure,
-  getUserSecretRequest,
-  getUserSecretSuccess,
-  getUserSecretFailure,
-  login,
-  logout,
-};
-
-export const getIsAuthorized = state =>
-  state.auth.isAuthorized;
-export const getUserProfile = state =>
-  state.auth.userProfile;
-export const getUserSecret = state =>
-  state.auth.userSecret;
-export const getToken = state => state.auth.userProfile.token;
+export const getIsAuthorized = state => state.auth.isAuthorized
+export const getUserProfile = state => state.auth.userProfile
+export const getUserSecret = state => state.auth.userSecret
+export const getToken = state => state.auth.userProfile.token

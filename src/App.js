@@ -1,44 +1,31 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
 import {
   compose,
   pure,
   branch,
   renderComponent,
   withHandlers,
-  lifecycle,
-} from 'recompose';
-
+  lifecycle
+} from 'recompose'
 
 import {
   getPosition,
   getExitPosition,
   getIsGameOver,
-  getIsTutorial1End,
-} from 'reducers';
-import {
-  moveLeft,
-  moveRight,
-  moveUp,
-  moveDown,
-  tutorial1End,
-} from 'actions';
+  getIsTutorial1End
+} from 'reducers'
+import { moveLeft, moveRight, moveUp, moveDown, tutorial1End } from 'actions'
 
-import './App.css';
+import './App.css'
+import styles from './App.module.css'
 
-const IN_PIXELS = 50;
+const IN_PIXELS = 50
 
-const App = ({
-  position,
-  exitPosition,
-  isTutorial1End,
-}) => (
-  <div>
+const App = ({ position, exitPosition, isTutorial1End }) => (
+  <div className={styles.root}>
     {!isTutorial1End ? (
-      <pre>
-        Press the right button 3 times and 1 time the down
-        button
-      </pre>
+      <pre>Press the right button 3 times and 1 time the down button</pre>
     ) : (
       <pre>Cool!</pre>
     )}
@@ -48,20 +35,20 @@ const App = ({
           className="player"
           style={{
             left: position.x * IN_PIXELS,
-            top: position.y * IN_PIXELS,
+            top: position.y * IN_PIXELS
           }}
         />
         <div
           className="exit"
           style={{
             left: exitPosition.x * IN_PIXELS,
-            top: exitPosition.y * IN_PIXELS,
+            top: exitPosition.y * IN_PIXELS
           }}
         />
       </div>
     </div>
   </div>
-);
+)
 
 const enhance = compose(
   connect(
@@ -69,55 +56,53 @@ const enhance = compose(
       position: getPosition(state),
       exitPosition: getExitPosition(state),
       isGameOver: getIsGameOver(state),
-      isTutorial1End: getIsTutorial1End(state),
+      isTutorial1End: getIsTutorial1End(state)
     }),
     {
       moveLeft,
       moveRight,
       moveUp,
       moveDown,
-      tutorial1End,
-    },
+      tutorial1End
+    }
   ),
   branch(
     ({ isGameOver }) => isGameOver,
-    renderComponent(() => <p>You win!</p>),
+    renderComponent(() => (
+      <div className={styles.root}>
+        <p>You win!</p>
+      </div>
+    ))
   ),
   withHandlers({
     handleKeyPress: props => event => {
       switch (event.key) {
         case 'ArrowUp':
-          props.moveUp();
-          break;
+          props.moveUp()
+          break
         case 'ArrowDown':
-          props.moveDown();
-          break;
+          props.moveDown()
+          break
         case 'ArrowLeft':
-          props.moveLeft();
-          break;
+          props.moveLeft()
+          break
         case 'ArrowRight':
-          props.moveRight();
-          break;
+          props.moveRight()
+          break
         default:
-          return;
+          return
       }
-    },
+    }
   }),
   lifecycle({
     componentDidMount() {
-      document.addEventListener(
-        'keydown',
-        this.props.handleKeyPress,
-      );
+      document.addEventListener('keydown', this.props.handleKeyPress)
     },
     componentWillUnmount() {
-      document.removeEventListener(
-        'keyup',
-        this.props.handleKeyPress,
-      );
-    },
+      document.removeEventListener('keyup', this.props.handleKeyPress)
+    }
   }),
-  pure,
-);
+  pure
+)
 
-export default enhance(App);
+export default enhance(App)

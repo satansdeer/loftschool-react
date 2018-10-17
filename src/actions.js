@@ -1,4 +1,4 @@
-import {createActions} from 'redux-actions';
+import { createActions } from 'redux-actions'
 
 const {
   fetchDataRequest,
@@ -10,7 +10,7 @@ const {
   moveDown,
   changePosition,
   gameOver,
-  tutorial1End,
+  tutorial1End
 } = createActions(
   'FETCH_DATA_REQUEST',
   'FETCH_DATA_SUCCESS',
@@ -21,8 +21,8 @@ const {
   'MOVE_DOWN',
   'CHANGE_POSITION',
   'GAME_OVER',
-  'TUTORIAL_1_END',
-);
+  'TUTORIAL_1_END'
+)
 
 export {
   moveLeft,
@@ -34,5 +34,5 @@ export {
   fetchDataRequest,
   fetchDataSuccess,
   fetchDataFailure,
-  tutorial1End,
-};
+  tutorial1End
+}

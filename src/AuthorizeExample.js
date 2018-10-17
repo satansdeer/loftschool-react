@@ -1,41 +1,43 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import {
   logout,
   getJwtRequest,
   getIsAuthorized,
   getUserProfile,
   getUserSecret,
-  getUserSecretRequest,
-} from './authReducer';
+  getUserSecretRequest
+} from './authReducer'
+import styles from './AuthorizeExample.module.css'
 
 class AuthorizeExample extends PureComponent {
   state = {
     email: '',
-    password: '',
-  };
+    password: ''
+  }
+
   handleEnter = () => {
-    const { email, password } = this.state;
-    const { getJwtRequest } = this.props;
-    this.setState({ email: '', password: '' });
-    getJwtRequest({ email, password });
-  };
+    const { email, password } = this.state
+    const { getJwtRequest } = this.props
+    // this.setState({ email: '', password: '' })
+    getJwtRequest({ email, password })
+  }
 
   handleChangeInput = event => {
     this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
+      [event.target.name]: event.target.value
+    })
+  }
 
   render() {
-    const { email, password } = this.state;
-    const { isAuthorized } = this.props;
+    const { email, password } = this.state
+    const { isAuthorized } = this.props
 
     if (isAuthorized) {
-      return <AuthorizedPart />;
+      return <AuthorizedPart />
     }
     return (
-      <div>
+      <div className={styles.root}>
         <input
           name="email"
           placeholder="email"
@@ -52,22 +54,28 @@ class AuthorizeExample extends PureComponent {
         <br />
         <button onClick={this.handleEnter}>Войти</button>
       </div>
-    );
+    )
   }
 }
 
 class AuthorizedPartClass extends PureComponent {
   componentDidMount() {
-    const { userSecret, getUserSecretRequest } = this.props;
+    const { userSecret, getUserSecretRequest } = this.props
     if (!userSecret) {
-      getUserSecretRequest();
+      getUserSecretRequest()
     }
   }
+
   logout = () => {
-    this.props.logout();
-  };
+    this.props.logout()
+  }
+
   render() {
-    return <button onClick={this.logout}>Выйти</button>;
+    return (
+      <div className={styles.root}>
+        <button onClick={this.logout}>Выйти</button>
+      </div>
+    )
   }
 }
 
@@ -75,14 +83,14 @@ const AuthorizedPart = connect(
   state => ({
     isAuthorized: getIsAuthorized(state),
     userProfile: getUserProfile(state),
-    userSecret: getUserSecret(state),
+    userSecret: getUserSecret(state)
   }),
-  { getUserSecretRequest, getJwtRequest, logout },
-)(AuthorizedPartClass);
+  { getUserSecretRequest, getJwtRequest, logout }
+)(AuthorizedPartClass)
 
 export default connect(
   state => ({
-    isAuthorized: getIsAuthorized(state),
+    isAuthorized: getIsAuthorized(state)
   }),
-  { getJwtRequest, logout },
-)(AuthorizeExample);
+  { getJwtRequest, logout }
+)(AuthorizeExample)
