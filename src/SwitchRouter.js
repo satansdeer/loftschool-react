@@ -10,7 +10,9 @@ import {
 const About = () => <div>About</div>;
 const Home = () => <div>Home</div>;
 const Topics = () => <div>Topics</div>;
-// const PageNotFound = () => <div>404 Not found</div>;
+const PageNotFound = () => <div>404 Not found</div>;
+
+const Ads = () => <div>Реклама</div>;
 
 class App extends Component {
   render() {
@@ -26,10 +28,12 @@ class App extends Component {
           <Route path="/" component={Home} exact />
           <Route path="/about" component={About} />
           <Route path="/topics" component={Topics} />
-          {/* <Route path="*" component={PageNotFound} /> */}
+          <Route path="*" component={PageNotFound} />
           <Redirect from="/about2" to="/about" />
           <Redirect to="/" />
         </Switch>
+
+        <Route path="/about" component={Ads} />
       </div>
     );
   }

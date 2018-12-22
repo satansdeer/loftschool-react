@@ -26,7 +26,7 @@ const Topics = props => {
 
 class SimpleRouter extends Component {
   state = {
-    userName: 'Artem',
+    userName: 'Maksim',
   };
 
   render() {
