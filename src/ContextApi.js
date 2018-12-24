@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 export class ContextApiProvider extends Component {
   state = { theme: 'light' };
 
+  componentDidMount() {
+    setInterval(this.toggleTheme, 2000);
+  }
+
   toggleTheme = () => {
     this.setState(state => ({
       theme: state.theme === 'light' ? 'dark' : 'light',
@@ -10,28 +14,15 @@ export class ContextApiProvider extends Component {
   };
 
   render() {
-    const { theme, children } = this.state;
-    return (
-      <IntermediateComponent>
-        {({ value }) => <p>{value}</p>}
-      </IntermediateComponent>
-    );
+    const { theme } = this.state;
+    return <Button theme={theme} />;
   }
 }
 
-const IntermediateComponent = ({ children }) => (
-  <div>
-    {children({
-      value: 'Hello from IntermediateComponent',
-    })}
-    <Button />
-  </div>
-);
-
-const Button = () => (
+const Button = ({ theme }) => (
   <button
     style={{
-      backgroundColor: '#666',
+      backgroundColor: theme === 'light' ? '#666' : '#eee',
     }}
   >
     Кнопка с темой
