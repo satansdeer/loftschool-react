@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 // import PropTypesExample from './PropTypesExample';
-// import Portals from './Portals'
-// import ContextApi from './ContextApi';
-import TVMaze from './TVMaze';
+// import ContextApiExample from './ContextApiExample';
+// import RefExample from './RefExample';
+import PortalsExample from './PortalsExample';
 
 ReactDOM.render(
-  <TVMaze />,
+  <PortalsExample />,
   document.getElementById('root'),
 );

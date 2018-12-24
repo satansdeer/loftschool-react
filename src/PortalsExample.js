@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-export class PortalExample extends Component {
+export class PortalsExample extends Component {
   state = {
     isShowModal: false,
   };
@@ -12,14 +12,10 @@ export class PortalExample extends Component {
     }));
   };
 
-  handleEvents = event => {
-    console.log(event.nativeEvent);
-  };
-
   render() {
     const { isShowModal } = this.state;
     return (
-      <div onClick={this.handleEvents}>
+      <div>
         <button onClick={this.toggleModal}>
           Открыть модальное окно
         </button>
@@ -30,7 +26,6 @@ export class PortalExample extends Component {
             <button onClick={this.toggleModal}>
               Закрой меня
             </button>
-            <button>Просто кнопка</button>
           </Modal>
         )}
       </div>
@@ -44,6 +39,7 @@ class Modal extends Component {
     this.id = 'modalPortal';
     this.div = document.createElement('div');
     this.div.id = this.id;
+
     document.body.insertAdjacentElement(
       'beforeend',
       this.div,
@@ -56,15 +52,13 @@ class Modal extends Component {
 
   render() {
     const { show, children } = this.props;
-    if (show) {
-      return ReactDOM.createPortal(
-        children,
-        document.getElementById(this.id),
-      );
-    } else {
-      return null;
-    }
+    return show
+      ? ReactDOM.createPortal(
+          children,
+          document.getElementById(this.id),
+        )
+      : null;
   }
 }
 
-export default PortalExample;
+export default PortalsExample;

@@ -5,38 +5,26 @@ const {
   Provider: ThemeProvider,
 } = React.createContext('');
 
-export class ContextApiProvider extends Component {
+export class ContextApiProviderExample extends Component {
   state = { theme: 'light' };
 
   toggleTheme = () => {
     this.setState(state => ({
       theme: state.theme === 'light' ? 'dark' : 'light',
     }));
-  }
+  };
 
   render() {
-    const { theme, children } = this.state;
+    const { theme } = this.state;
     return (
       <ThemeProvider
         value={{ theme, toggleTheme: this.toggleTheme }}
       >
-        <IntermediateComponent>
-          {({ value }) => <p>{value}</p>}
-        </IntermediateComponent>
-        {children}
+        <Button />
       </ThemeProvider>
     );
   }
 }
-
-const IntermediateComponent = ({ children }) => (
-  <div>
-    {children({
-      value: 'Hello from IntermediateComponent',
-    })}
-    <Button />
-  </div>
-);
 
 const Button = () => (
   <ThemeConsumer>
@@ -54,4 +42,4 @@ const Button = () => (
   </ThemeConsumer>
 );
 
-export default ContextApiProvider;
+export default ContextApiProviderExample;
