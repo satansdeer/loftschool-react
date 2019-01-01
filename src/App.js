@@ -1,12 +1,5 @@
 import React, { PureComponent } from 'react';
 import './App.css';
-import {
-  getSeriesImages,
-  getIsLoading,
-  getError,
-  fetchSeriesRequest,
-} from './modules/series/';
-import { connect } from 'react-redux';
 
 // 0. idle
 // 1. request
@@ -26,13 +19,26 @@ import { connect } from 'react-redux';
 //   error: from fetch
 
 class App extends PureComponent {
+  state = {
+    isLoading: false,
+    data: [],
+    error: null,
+  };
+
   componentDidMount() {
-    const { fetchSeriesRequest } = this.props;
-    fetchSeriesRequest(180);
+    this.setState({ isLoading: true });
+    fetch('http://api.tvmaze.com/shows/100/episodes', { method: 'GET' })
+      .then(response => response.json())
+      .then(data => {
+        setTimeout(this.setState({ data, isLoading: false }), 1000);
+      })
+      .catch(error => {
+        this.setState({ error, isLoading: false });
+      });
   }
 
   render() {
-    const { series, isLoading, error } = this.props;
+    const { data, isLoading, error } = this.state;
 
     if (isLoading) return <p>Данные загружаются...</p>;
     if (error) return <p>Произошла сетевая ошибка</p>;
@@ -40,9 +46,9 @@ class App extends PureComponent {
     return (
       <div>
         <h1>Firefly</h1>
-        {series.map(ep => (
+        {data.map(ep => (
           <div key={ep.id}>
-            <img src={ep.image} alt={ep.name} />
+            {ep.image && <img src={ep.image.original} alt={ep.name} />}
           </div>
         ))}
       </div>
@@ -50,14 +56,4 @@ class App extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  series: getSeriesImages(state),
-  isLoading: getIsLoading(state),
-  error: getError(state),
-});
-const mapDispatchToProps = { fetchSeriesRequest };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
+export default App;
