@@ -37,6 +37,15 @@ export default combineReducers({
   error,
 });
 
+export const getSeries = state =>
+  state.series.map(({ id, name, image: { original } }) => ({
+    id,
+    name,
+    image: original,
+  }));
+export const getIsLoading = state => state.isLoading;
+export const getError = state => state.error;
+
 // const initialState = {
 //   series: [],
 //   isLoading: false,

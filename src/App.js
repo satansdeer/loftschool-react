@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { getSeriesRequest } from './modules/series/actions';
+import { getSeries, getIsLoading, getError } from './modules/series/reducer';
 import { connect } from 'react-redux';
 import './App.css';
 
@@ -28,6 +29,7 @@ class App extends PureComponent {
 
   render() {
     const { series, isLoading, error } = this.props;
+    console.log(series);
 
     if (isLoading) return <p>Данные загружаются...</p>;
     if (error) return <p>Произошла сетевая ошибка</p>;
@@ -36,7 +38,7 @@ class App extends PureComponent {
         <h1>Firefly</h1>
         {series.map(ep => (
           <div key={ep.id}>
-            {ep.image && <img src={ep.image.original} alt={ep.name} />}
+            {ep.image && <img src={ep.image} alt={ep.name} />}
           </div>
         ))}
       </div>
@@ -44,7 +46,11 @@ class App extends PureComponent {
   }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+  series: getSeries(state),
+  isLoading: getIsLoading(state),
+  error: getError(state),
+});
 const mapDispatchToProps = { getSeriesRequest };
 
 export default connect(
