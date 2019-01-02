@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react';
+import { getSeriesRequest } from './modules/series/actions';
+import { connect } from 'react-redux';
 import './App.css';
 
 // 0. idle
@@ -19,36 +21,20 @@ import './App.css';
 //   error: from fetch
 
 class App extends PureComponent {
-  state = {
-    isLoading: false,
-    data: [],
-    error: null,
-  };
-
   componentDidMount() {
-    this.setState({ isLoading: true });
-    fetch('http://api.tvmaze.com/shows/180/episodes', { method: 'GET' })
-      .then(response => response.json())
-      .then(data => {
-        setTimeout(() => {
-          this.setState({ data, isLoading: false });
-        }, 1000);
-      })
-      .catch(error => {
-        //this.setState({ error, isLoading: false });
-      });
+    const { getSeriesRequest } = this.props;
+    getSeriesRequest();
   }
 
   render() {
-    const { data, isLoading, error } = this.state;
+    const { series, isLoading, error } = this.props;
 
     if (isLoading) return <p>Данные загружаются...</p>;
     if (error) return <p>Произошла сетевая ошибка</p>;
-
     return (
       <div>
         <h1>Firefly</h1>
-        {data.map(ep => (
+        {series.map(ep => (
           <div key={ep.id}>
             {ep.image && <img src={ep.image.original} alt={ep.name} />}
           </div>
@@ -58,4 +44,10 @@ class App extends PureComponent {
   }
 }
 
-export default App;
+const mapStateToProps = state => state;
+const mapDispatchToProps = { getSeriesRequest };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);
