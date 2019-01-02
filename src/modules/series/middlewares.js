@@ -1,18 +1,18 @@
 import {
-  getSeriesRequest,
-  getSeriesSuccess,
-  getSeriesFailure,
+  fetchSeriesRequest,
+  fetchSeriesSuccess,
+  fetchSeriesFailure,
 } from './actions';
 
 export const tvMazeMiddleware = store => next => action => {
-  if (action.type === getSeriesRequest.toString()) {
+  if (action.type === fetchSeriesRequest.toString()) {
     fetch('http://api.tvmaze.com/shows/180/episodes', { method: 'GET' })
       .then(response => response.json())
       .then(data => {
-        store.dispatch(getSeriesSuccess(data));
+        store.dispatch(fetchSeriesSuccess(data));
       })
       .catch(error => {
-        store.dispatch(getSeriesFailure(error));
+        store.dispatch(fetchSeriesFailure(error));
       });
   }
   next(action);

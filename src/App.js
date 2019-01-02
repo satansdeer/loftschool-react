@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react';
-import { getSeriesRequest } from './modules/series/actions';
-import { getSeries, getIsLoading, getError } from './modules/series/reducer';
+import {
+  fetchSeriesRequest,
+  getSeries,
+  getIsLoading,
+  getError,
+} from './modules/series';
 import { connect } from 'react-redux';
 import './App.css';
 
@@ -23,13 +27,12 @@ import './App.css';
 
 class App extends PureComponent {
   componentDidMount() {
-    const { getSeriesRequest } = this.props;
-    getSeriesRequest();
+    const { fetchSeriesRequest } = this.props;
+    fetchSeriesRequest();
   }
 
   render() {
     const { series, isLoading, error } = this.props;
-    console.log(series);
 
     if (isLoading) return <p>Данные загружаются...</p>;
     if (error) return <p>Произошла сетевая ошибка</p>;
@@ -51,7 +54,7 @@ const mapStateToProps = state => ({
   isLoading: getIsLoading(state),
   error: getError(state),
 });
-const mapDispatchToProps = { getSeriesRequest };
+const mapDispatchToProps = { fetchSeriesRequest };
 
 export default connect(
   mapStateToProps,

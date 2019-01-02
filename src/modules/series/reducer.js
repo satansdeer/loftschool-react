@@ -1,32 +1,32 @@
 import {
-  getSeriesRequest,
-  getSeriesSuccess,
-  getSeriesFailure,
+  fetchSeriesRequest,
+  fetchSeriesSuccess,
+  fetchSeriesFailure,
 } from './actions';
 import { handleActions } from 'redux-actions';
 import { combineReducers } from 'redux';
 
 const series = handleActions(
   {
-    [getSeriesRequest]: () => [],
-    [getSeriesSuccess]: (_state, action) => action.payload,
+    [fetchSeriesRequest]: () => [],
+    [fetchSeriesSuccess]: (_state, action) => action.payload,
   },
   [],
 );
 
 const isLoading = handleActions(
   {
-    [getSeriesRequest]: () => true,
-    [getSeriesSuccess]: () => false,
-    [getSeriesFailure]: () => false,
+    [fetchSeriesRequest]: () => true,
+    [fetchSeriesSuccess]: () => false,
+    [fetchSeriesFailure]: () => false,
   },
   false,
 );
 
 const error = handleActions(
   {
-    [getSeriesRequest]: () => null,
-    [getSeriesFailure]: (_state, action) => action.payload,
+    [fetchSeriesRequest]: () => null,
+    [fetchSeriesFailure]: (_state, action) => action.payload,
   },
   null,
 );
@@ -37,14 +37,13 @@ export default combineReducers({
   error,
 });
 
-export const getSeries = state =>
-  state.series.map(({ id, name, image: { original } }) => ({
-    id,
-    name,
-    image: original,
-  }));
-export const getIsLoading = state => state.isLoading;
-export const getError = state => state.error;
+// state => state.series,
+// series =>
+//   series.map(({ id, name, image: { original } }) => ({
+//     id,
+//     name,
+//     image: original,
+//   })),
 
 // const initialState = {
 //   series: [],

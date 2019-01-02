@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 
-export const getIsLoading = state => state.series.isLoading;
-export const getError = state => state.series.error;
-export const getSeriesImages = createSelector(
-  state => state.series.elements,
-  elements =>
-    elements.map(({ id, image: { original }, name }) => ({
+export const getSeries = createSelector(
+  state => state.series,
+  series =>
+    series.map(({ id, name, image: { original } }) => ({
       id,
-      image: original,
       name,
+      image: original,
     })),
 );
+export const getIsLoading = state => state.isLoading;
+export const getError = state => state.error;
