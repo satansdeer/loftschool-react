@@ -27,13 +27,15 @@ class App extends PureComponent {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    fetch('http://api.tvmaze.com/shows/100/episodes', { method: 'GET' })
+    fetch('http://api.tvmaze.com/shows/180/episodes', { method: 'GET' })
       .then(response => response.json())
       .then(data => {
-        setTimeout(this.setState({ data, isLoading: false }), 1000);
+        setTimeout(() => {
+          this.setState({ data, isLoading: false });
+        }, 1000);
       })
       .catch(error => {
-        this.setState({ error, isLoading: false });
+        //this.setState({ error, isLoading: false });
       });
   }
 
