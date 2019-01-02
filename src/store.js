@@ -1,16 +1,12 @@
-import { createStore, compose, applyMiddleware } from 'redux';
-import { tvmazeFetchMiddleware } from './modules/series';
-import rootReducer from './modules';
+import { createStore } from 'redux';
+import rootReducer from './modules/series/reducer';
 
 const createAppStore = () => {
   const store = createStore(
     rootReducer,
-    compose(
-      applyMiddleware(tvmazeFetchMiddleware),
-      window.__REDUX_DEVTOOLS_EXTENSION__
-        ? window.__REDUX_DEVTOOLS_EXTENSION__()
-        : noop => noop,
-    ),
+    window.__REDUX_DEVTOOLS_EXTENSION__
+      ? window.__REDUX_DEVTOOLS_EXTENSION__()
+      : noop => noop,
   );
 
   return store;
