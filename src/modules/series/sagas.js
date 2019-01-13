@@ -1,5 +1,9 @@
-import { takeEvery, call } from 'redux-saga/effects';
-import { fetchSeriesRequest } from './actions';
+import { takeEvery, call, put } from 'redux-saga/effects';
+import {
+  fetchSeriesRequest,
+  fetchSeriesSuccess,
+  fetchSeriesFailure,
+} from './actions';
 
 const getSeries = showId =>
   fetch(`http://api.tvmaze.com/shows/${showId}/episodes`).then(response =>
@@ -8,7 +12,11 @@ const getSeries = showId =>
 
 export function* handleSeries() {
   yield takeEvery(fetchSeriesRequest, function*() {
-    const result = yield call(getSeries, 100);
-    console.log(result);
+    try {
+      const result = yield call(getSeries, 180);
+      yield put(fetchSeriesSuccess(result));
+    } catch (error) {
+      yield put(fetchSeriesFailure(error));
+    }
   });
 }
