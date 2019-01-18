@@ -1,59 +1,63 @@
-import React, { Component } from "react";
+import React from "react";
+import { reduxForm, Field } from "redux-form";
 import "./App.css";
-import { Formik, Field } from "formik";
 
-const Input = props => {
-  console.log(props);
-  return <input {...props} />;
+const customField = ({
+  input,
+  type,
+  placeholder,
+  id,
+  meta: { touched, error },
+  ...rest
+}) => {
+  return (
+    <div>
+      <input {...input} placeholder={placeholder} type={type} id={id} />
+      {touched && error && <p style={{ color: "red" }}>{error}</p>}
+    </div>
+  );
 };
 
-class App extends Component {
-  state = {
-    values: {
-      firstName: "",
-      lastName: "",
-      email: ""
-    },
-    errors: {
-      firstName: "",
-      lastName: "",
-      email: ""
-    }
-  };
-
-  render() {
-    return (
-      <Formik
-        onSubmit={(a, b) => console.log(a, b)}
-        initialValues={{ email: "123", password: "123" }}
-        validate={values => {
-          const errors = {
-            email: "",
-            password: ""
-          };
-
-          if (!values.email.includes("@")) {
-            errors.email = "Invalid";
-          }
-
-          return errors;
-        }}
-        render={({ handleSubmit, touched, errors }) => {
-          return (
-            <form onSubmit={handleSubmit}>
-              <Field type="email" name="email" component={Input} />
-              {touched.email && errors.email && <div>{errors.email}</div>}
-              <Field type="password" name="password" />
-              {touched.password && errors.password && (
-                <div>{errors.password}</div>
-              )}
-              <button type="submit">Submit</button>
-            </form>
-          );
-        }}
-      />
-    );
+const myValidator = values => {
+  const errors = {};
+  if (!values.firstName) {
+    errors.firstName = "First name is required";
   }
-}
+  return errors;
+};
 
-export default App;
+const WrappedForm = ({ handleSubmit }) => {
+  return (
+    <form onSubmit={handleSubmit(val => console.log(val))}>
+      <div>
+        <Field
+          name="firstName"
+          type="text"
+          id="first-name"
+          placeholder="Maksim"
+          component={customField}
+        />
+        <Field
+          name="lastName"
+          type="text"
+          id="last-name"
+          placeholder="Ivanov"
+          component={customField}
+        />
+        <Field
+          name="email"
+          type="email"
+          id="email"
+          placeholder="maksim@ivanov.com"
+          component={customField}
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default reduxForm({
+  form: "wrappedForm",
+  validate: myValidator
+})(WrappedForm);
