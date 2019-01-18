@@ -1,8 +1,0 @@
-{
-  "printWidth": 60,
-  "singleQuote": true,
-  "semi": true,
-  "bracketSpacing": true,
-  "parser": "babylon",
-  "trailingComma": "all"
-}
