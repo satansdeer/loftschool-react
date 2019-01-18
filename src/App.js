@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import "./App.css";
+import { Formik, Field } from "formik";
 
-const validate = (name, value) => {
-  switch (name) {
-    case "firstName":
-      return "ERROR";
-    default:
-      return null;
-  }
+const Input = props => {
+  console.log(props);
+  return <input {...props} />;
 };
 
 class App extends Component {
@@ -24,40 +21,37 @@ class App extends Component {
     }
   };
 
-  handleChangeInput = event => {
-    const { name, value } = event.target;
-    const error = validate(name, value);
-    this.setState({
-      errors: { ...this.state.errors, [name]: error }
-    });
-    this.setState({
-      values: { ...this.state.values, [name]: value }
-    });
-  };
-
   render() {
-    const { values, errors } = this.state;
     return (
-      <div>
-        <input
-          name="firstName"
-          value={values.firstName}
-          onChange={this.handleChangeInput}
-        />
-        {errors.firstName !== "" && <p>{errors.firstName}</p>}
-        <input
-          name="lastName"
-          value={values.lastName}
-          onChange={this.handleChangeInput}
-        />
-        {errors.lastName !== "" && <p>{errors.lastName}</p>}
-        <input
-          name="email"
-          value={values.email}
-          onChange={this.handleChangeInput}
-        />
-        {errors.email !== "" && <p>{errors.email}</p>}
-      </div>
+      <Formik
+        onSubmit={(a, b) => console.log(a, b)}
+        initialValues={{ email: "123", password: "123" }}
+        validate={values => {
+          const errors = {
+            email: "",
+            password: ""
+          };
+
+          if (!values.email.includes("@")) {
+            errors.email = "Invalid";
+          }
+
+          return errors;
+        }}
+        render={({ handleSubmit, touched, errors }) => {
+          return (
+            <form onSubmit={handleSubmit}>
+              <Field type="email" name="email" component={Input} />
+              {touched.email && errors.email && <div>{errors.email}</div>}
+              <Field type="password" name="password" />
+              {touched.password && errors.password && (
+                <div>{errors.password}</div>
+              )}
+              <button type="submit">Submit</button>
+            </form>
+          );
+        }}
+      />
     );
   }
 }
