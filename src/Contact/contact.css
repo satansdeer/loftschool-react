@@ -1,0 +1,13 @@
+.contact {
+  padding-bottom: 20px;
+}
+
+.contact-image {
+  border-radius: 50%;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+
+.contact-name {
+  vertical-align: middle;
+}

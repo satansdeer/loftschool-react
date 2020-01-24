@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import RecomposeExample from './RecomposeExample';
 import ForwardRefExample from './ForwardRefExample';
+import LoaderHOCExample from './LoaderHOCExample';
 // import RenderProps from './RenderProps';
 // import HOCs from './HOCs';
 // import { AuthProvider, authHOC } from './AuthContext';
@@ -23,6 +24,7 @@ ReactDOM.render(
   //   {/* <SomeComponent /> */}
   // </AuthProvider>,
   // <RecomposeExample />,
-  <ForwardRefExample />,
+  // <ForwardRefExample />,
+  <LoaderHOCExample />,
   document.getElementById('root'),
 );
