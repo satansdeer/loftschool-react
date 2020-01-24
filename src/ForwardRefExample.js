@@ -10,6 +10,8 @@ class Stateless extends Component {
 
 function pureHOC(WrappedComponent) {
   class WithPure extends PureComponent {
+    static displayName = 'pureHOCWrapper';
+
     render() {
       const { forwardedRef, ...rest } = this.props;
       return (

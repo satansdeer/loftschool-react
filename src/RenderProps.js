@@ -19,15 +19,15 @@ class WithWindowSize extends PureComponent {
 
   render() {
     const { width } = this.state;
-    const { render } = this.props;
-    return render(width);
+    const { children } = this.props;
+    return children(width);
   }
 }
 
 const RenderPropsExample = () => (
-  <WithWindowSize
-    render={width => <pre>windowWidth: {width}</pre>}
-  />
+  <WithWindowSize>
+    {width => <pre>windowWidth: {width}</pre>}
+  </WithWindowSize>
 );
 
 export default RenderPropsExample;

@@ -6,6 +6,7 @@ import ForwardRefExample from './ForwardRefExample';
 import LoaderHOCExample from './LoaderHOCExample';
 import { PureHOCExample } from './PureHOCExample';
 import AuthContextExample from './AuthContextExample';
+import RenderPropsExample from './RenderProps';
 // import RenderProps from './RenderProps';
 // import HOCs from './HOCs';
 // import { AuthProvider, authHOC } from './AuthContext';
@@ -27,6 +28,6 @@ ReactDOM.render(
   // </AuthProvider>,
   // <RecomposeExample />,
   // <ForwardRefExample />,
-  <AuthContextExample />,
+  <RenderPropsExample />,
   document.getElementById('root'),
 );
